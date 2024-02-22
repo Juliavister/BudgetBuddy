@@ -28,8 +28,6 @@ body, html {
 	color: white;
 	font-weight: bold;
 	font-family: "Lucida Console", "Courier New", monospace;
-  	border:1px solid #f1f1f1;
-	border-radius: 10px;
 	position: absolute;
 	top: 50%;
 	left: 50%;

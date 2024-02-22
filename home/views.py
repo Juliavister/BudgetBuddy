@@ -10,7 +10,8 @@ from django.db.models import Sum
 from django.http import JsonResponse
 import datetime
 from django.utils import timezone
-
+import csv
+import json
 
 def home(request):
     if request.session.has_key('is_logged'):
@@ -370,4 +371,31 @@ def receipts(request):
 
 def about(request):
     return render(request,'home/about.html')
-     
+ 
+def download_expense_csv(request):
+    expenses = Addmoney_info.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="expense_data.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(["User", "Add Money", "Quantity", "Date", "Category"])
+
+    for expense in expenses:
+        writer.writerow([expense.user.username, expense.add_money, expense.quantity, expense.Date, expense.Category])
+    return response
+
+def download_expense_json(request):
+    expense_data_queryset = Addmoney_info.objects.all()
+    expense_data = [
+        {
+            "add_money": expense.add_money,
+            "quantity": expense.quantity,
+            "Category": expense.Category,
+            "Date": expense.Date.strftime("%Y-%m-%d"), 
+        }
+        for expense in expense_data_queryset
+    ]
+    json_data = json.dumps(expense_data, indent=2)
+    response = HttpResponse(json_data, content_type='application/json')
+    response['Content-Disposition'] = 'attachment; filename="expense_data.json"'
+    return response

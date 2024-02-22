@@ -4,6 +4,7 @@ from django.urls import include
 from . import views
 from django.contrib.auth import views as auth_views
 from .views import profile_edit, profile_update
+from .views import download_expense_csv, download_expense_json
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -36,5 +37,7 @@ urlpatterns = [
     path('info_year/',views.info_year,name="info_year"),
     path('/profile_edit/', profile_edit, name='profile_edit'),
     path('receipts/', views.receipts, name='receipts'),
-      path('about/', views.about, name='about'),
+    path('about/', views.about, name='about'),
+    path('download_expense_csv/', download_expense_csv, name='download_expense_csv'),
+     path('download_expense_json/', download_expense_json, name='download_expense_json'),
 ]

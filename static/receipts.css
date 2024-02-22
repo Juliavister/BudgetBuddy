@@ -14,6 +14,13 @@
     height: 100vh;
     margin: auto;
     position: relative;
+    border-radius: 10px;
+}
+
+.custom-img-box {
+    height: auto;
+    max-height: 300px;
+    border-radius: 10px;
 }
 
 #textBox{
@@ -26,6 +33,7 @@
     background: transparent;
     color: black;
     padding: 10px;
+    border-radius: 10px;
 }
 
 #prevText{
@@ -47,3 +55,4 @@
     transform: translateX(-50%);
     cursor: pointer;
 }
+

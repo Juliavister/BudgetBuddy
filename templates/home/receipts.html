@@ -10,6 +10,7 @@
         <title>Dashboard</title>
         <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'addmoney.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'receipts.css' %}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
@@ -19,12 +20,10 @@
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <a class="navbar-brand" href="/index">Start</a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
-            <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
             {% csrf_token %} 
                 
             </form>
-            <!-- Navbar-->
             <ul class="navbar-nav ml-auto ml-md-0">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
@@ -106,20 +105,35 @@
                     </div>
                 </nav>
             </div>
+
             <div id="layoutSidenav_content">
                 <main>
-                    <h1 class="mt-4">My receipts</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="/index">Dashboard</a></li>
-                            <li class="breadcrumb-item active">receipts</li>
-                        </ol>
-                    <div class="col-md-4">
-                        <div class="profile-img">
-                            <img src="#" alt=""/>
-                            <br>
-                            <div class="file btn btn-lg btn-primary">
-                                Upload photo
-                                <input type="file" name="file"/>
+                    <h1 class="mt-4 ml-3">My receipts</h1>
+                    <ol class="breadcrumb mb-4 ml-3">
+                        <li class="breadcrumb-item"><a href="/index">Dashboard</a></li>
+                        <li class="breadcrumb-item active">receipts</li>
+                    </ol>
+            
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="container custom-img-box" id="imgBox1">
+                                <div id="prevText1"></div>
+                                <textarea id="textBox1" placeholder="add caption"></textarea>
+                                <input type="file" accept="image/*" id="file1" name="image" style="display:none;" onchange="loadFile(event)">
+                                <label for="file1" class="mt-2">
+                                    <i class="bi bi-camera-fill" style="margin-right:8px; font-size: 5rem;"></i>
+                                </label>
+                            </div>
+                        </div>
+            
+                        <div class="col-md-6">
+                            <div class="container custom-img-box" id="imgBox2">
+                                <div id="prevText2"></div>
+                                <textarea id="textBox2" placeholder="add caption"></textarea>
+                                <input type="file" accept="image/*" id="file2" name="image" style="display:none;" onchange="loadFile(event)">
+                                <label for="file2" class="mt-2">
+                                    <i class="bi bi-camera-fill" style="margin-right:8px; font-size: 5rem;"></i>
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -127,7 +141,16 @@
             </div>
 
 
-
+ <script>
+    var textBox = document.getElementById('textBox');
+    var imgBox = document.getElementById('imgBox');
+            
+    textBox.onkeyup = textBox.onkeypress = function() {
+        document.getElementById('prevText').innerHTML = textBox.value; }
+            
+    var loadFile = function(event){
+         imgBox.style.backgroundImage = "url (" +URL.createObjectURL(event.target.files[0])+ "')"; }
+</script>
             
 <script src="{% static 'javascript/info.js'%}"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
