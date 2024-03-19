@@ -35,9 +35,11 @@ urlpatterns = [
     path('<int:id>/profile_update/',views.profile_update,name="profile_update"),
     path('info/',views.info,name="info"),
     path('info_year/',views.info_year,name="info_year"),
-    path('/profile_edit/', profile_edit, name='profile_edit'),
+    path('profile_edit/', profile_edit, name='profile_edit'),
     path('receipts/', views.receipts, name='receipts'),
     path('about/', views.about, name='about'),
     path('download_expense_csv/', download_expense_csv, name='download_expense_csv'),
-     path('download_expense_json/', download_expense_json, name='download_expense_json'),
+    path('download_expense_json/', download_expense_json, name='download_expense_json'),
+    path('upload_photo/', views.upload_photo, name='upload_photo'),
+
 ]

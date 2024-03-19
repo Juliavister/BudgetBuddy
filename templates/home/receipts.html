@@ -142,14 +142,29 @@
 
 
  <script>
-    var textBox = document.getElementById('textBox');
-    var imgBox = document.getElementById('imgBox');
-            
-    textBox.onkeyup = textBox.onkeypress = function() {
-        document.getElementById('prevText').innerHTML = textBox.value; }
-            
-    var loadFile = function(event){
-         imgBox.style.backgroundImage = "url (" +URL.createObjectURL(event.target.files[0])+ "')"; }
+      var textBox1 = document.getElementById('textBox1');
+        var textBox2 = document.getElementById('textBox2');
+        var prevText1 = document.getElementById('prevText1');
+        var prevText2 = document.getElementById('prevText2');
+        
+        textBox1.onkeyup = textBox1.onkeypress = function() {
+            prevText1.innerHTML = textBox1.value;
+        };
+        
+        textBox2.onkeyup = textBox2.onkeypress = function() {
+            prevText2.innerHTML = textBox2.value;
+        };
+        
+        // Function to load image file and display preview
+        var loadFile = function(event) {
+            var imgBox = event.target.parentNode;
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function() {
+                imgBox.style.backgroundImage = "url('" + reader.result + "')";
+            };
+            reader.readAsDataURL(file);
+        };
 </script>
             
 <script src="{% static 'javascript/info.js'%}"></script>

@@ -5,6 +5,8 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db.models import Sum
+from django.utils import timezone
+
 
 SELECT_CATEGORY_CHOICES = [
     ("Food","Food"),
@@ -12,6 +14,8 @@ SELECT_CATEGORY_CHOICES = [
     ("Shopping","Shopping"),
     ("Necessities","Necessities"),
     ("Entertainment","Entertainment"),
+    ("Games", "Games"),
+    ("Books", "Books"),
     ("Other","Other")
  ]
 ADD_EXPENSE_CHOICES = [
@@ -41,5 +45,12 @@ class UserProfile(models.Model):
     image = models.ImageField(upload_to='profile_image',blank=True)
     def __str__(self):
        return self.user.username
-   
+
+class UploadPhoto(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default = 1)
+    photo = models.ImageField(upload_to='photos/',blank=True, null=True)
+    caption = models.CharField(max_length=100, blank=True)
+    uploaded_at = models.DateTimeField(default=timezone.now)
+    def __str__(self):
+        return self.caption
 

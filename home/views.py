@@ -12,6 +12,9 @@ import datetime
 from django.utils import timezone
 import csv
 import json
+from .models import UploadPhoto
+from .forms import UploadPhoto
+
 
 def home(request):
     if request.session.has_key('is_logged'):
@@ -399,3 +402,14 @@ def download_expense_json(request):
     response = HttpResponse(json_data, content_type='application/json')
     response['Content-Disposition'] = 'attachment; filename="expense_data.json"'
     return response
+
+def upload_photo(request):
+    if request.method == 'POST':
+        form = UploadPhoto(request.POST, request.FILES)
+        if form.is_valid():
+            form.instance.user = request.user
+            form.save()
+            return redirect('home')
+        else:
+            form = UploadPhoto()
+        return render(request, 'home/receipts.html', {'form': form})
